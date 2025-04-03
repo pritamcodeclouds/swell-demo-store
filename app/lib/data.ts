@@ -1,12 +1,8 @@
-//const { swell } = require('swell-node');
-//import {swell} from 'swell-node';
-import swell from 'swell-js'
+import swell from '@/lib/swell/client';
 import '@/envConfig.ts'
 
 export async function fetchSwellProducts() {
-    try {
-       //swell.init('pb24dempapp', 'pk_Zg9elOkHxjA9Ea78lEoJMB6D5S8Owvyl');
-       swell.init( process.env.SWELL_API_STORE_ID!,  process.env.SWELL_API_API_KEY!)
+    try { 
         try {
             const  data  = await swell.get('/products', {
               active: true

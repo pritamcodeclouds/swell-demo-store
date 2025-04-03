@@ -1,41 +1,56 @@
-import Image from 'next/image'
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
+import swell from '@/lib/swell/client';
 
-export default function Header({ scrollHandler }) {
+export default function Header() {
+  // const location = useLocation(); // Get the current location (route)
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+
+  useEffect(() => {
+    // Retrieve data from localStorage
+    if (localStorage.getItem('isAuthenticated')) {
+      setIsAuthenticated(true);
+      console.log("header mounted");
+    }
+  }, [pathname]); // Runs only once when the component mounts
+
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    await swell.account.logout();
+    localStorage.removeItem('isAuthenticated');
+    setIsAuthenticated(false);
+    router.push('/login');
+  }
   return (
-    <header className="relative">
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
-      <div className="mx-auto">
-        <div className="relative shadow-xl sm:overflow-hidden">
-          <div className="absolute inset-0">
-            <Image
-              priority
-              fill
-              className="h-full w-full object-cover"
-              src="/banner.jpg"
-              alt="People working on laptops"
-            />
-            <div className="absolute inset-0 bg-orange-100 mix-blend-multiply" />
-          </div>
-          <div className="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
-            <p className="relative left-0 right-0 mx-auto mt-5 max-w-xl text-center text-xl  font-semibold uppercase tracking-wide text-red-600">
-              The Swell Mart
-            </p>
-            <h1 className="mt-1 text-center font-bold uppercase text-gray-900 sm:text-5xl sm:tracking-tight lg:text-7xl">
-              <span className="block text-white">Shop Smart.  </span>
-              <span className="block text-yellow-500">Live Better.</span>
-            </h1>
+    <header className="bg-gray-900 text-white py-4">
+  <div className="container mx-auto flex items-center justify-between">
+   
+    <div className="flex items-center">
+      <img src="/logo.png" alt="Website Logo" className="h-30 w-auto" />
+    </div>
 
-            <div className="mx-auto mt-10 max-w-xs sm:flex sm:max-w-none sm:justify-center">
-              <button
-                className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-orange-600 shadow-sm hover:bg-orange-100 sm:px-8"
-                onClick={scrollHandler}
-              >
-                Shop Collections
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+  
+    <nav className="space-x-6 text-lg">
+    <Link href="/" className="hover:underline">Home</Link>
+          <Link href="/about" className="hover:underline">About</Link>
+          <Link href="/products" className="hover:underline">Products</Link>
+          <Link href="/profile" className="hover:underline">Profile</Link>
+          {isAuthenticated ? (
+            <Link href="/logout" className="hover:underline" onClick={handleLogout}>Logout</Link>
+          ) : (
+            <Link href="/login" className="hover:underline">Login</Link>
+          )}
+    </nav>
+  </div>
+</header>
+
+
   )
 }
