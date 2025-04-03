@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+
+
 ## Getting Started
 
 First, run the development server:
@@ -19,6 +21,21 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Create Local env File
+create .env file at project root directory with following credientials
+
+# `Swell credientials`
+SWELL_API_API_KEY =pk_Zg9elOkHxjA9Ea78lEoJMB6D5S8Owvyl
+SWELL_API_STORE_ID=pb24dempapp
+
+NEXT_PUBLIC_SWELL_STORE_ID=pb24dempapp
+NEXT_PUBLIC_SWELL_PUBLIC_KEY=pk_Zg9elOkHxjA9Ea78lEoJMB6D5S8Owvyl
+
+
+
+
+
 
 ## Learn More
 
